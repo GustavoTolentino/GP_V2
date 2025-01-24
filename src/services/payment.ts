@@ -1,0 +1,38 @@
+import { IFeedbackData } from "@/types";
+import api from "./api";
+
+export const getAllFeedbacksById = async (id:any) => {
+  const response = await api.post("/AccountFeedbacks/get-all-account-feedback-by-account-id", {id:id,});
+  return response.data;
+};
+
+export const createPayment = async (payment:any) => {
+  const response = await api.post("/PaymentDetails/create-payment-detail-for-health-professional", payment);
+  return response.data;
+};
+
+export const getAllDropdownsPayments = async () => {
+  const response = await api.post("PaymentTypes/get-all-paymentt-types");
+  const responseVolumetries = await getAllVolumetries();
+  const ret = {
+    volumetries: responseVolumetries.data,
+    paymentTypes: response.data.data
+  }
+  return ret;
+};
+
+export const getPaymentById = async (id:any) => {
+  const response = await api.post("/PaymentDetails/get-payment-detail-by-health-professional-id", {healthProfessionalId:id});
+  return response.data;
+}
+
+const getAllVolumetries = async () => {
+  const response = await api.get("Volumetries/get-all-volumetries");
+  return response.data;
+}
+export const updatePayment = async (data: any) => {
+  const response = await api.post("/PaymentDetails/update-payment-detail", {
+    ...data,
+  });
+  return response.data;
+};
