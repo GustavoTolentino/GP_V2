@@ -25,10 +25,12 @@ type SessionStore = {
   isLoading?: boolean;
   idUser?: string;
   idClient?: string;
+  idClientProgram?: string;
   imageBase64?: string;
   setImageBase64: (imageBase64: string) => void;
   setUserId?: (idUser: string) => void;
   setClientId?: (idClient: string) => void;
+  setClientProgramId?: (idClientProgram: string) => void;
   setIsLoading?: (isLoading: boolean) => void;
   setProceduresId?: (proceduresId: any) => void;
   setUserNameLab: (userNameLab: string) => void;
@@ -75,6 +77,7 @@ const useSession = create(
       userNameLab: "",
       nameInactive: "",
       idClient: "",
+      idClientProgram: "",
       crmInactive: "",
       proceduresId: "",
       isLoading: false,
@@ -103,6 +106,7 @@ const useSession = create(
       setEmail: (email: string) => set({ email: email }),
       setToken: (token) => set({ token: token }),
       setClientId: (idClient) => set({idClient: idClient}),
+      setClientProgramId: (idClientProgram) => set({idClientProgram: idClientProgram}),
       onLogin: () => set({ isLogged: true }),
       onLogout: () =>
         set({
@@ -127,7 +131,8 @@ const useSession = create(
           proceduresId: "",
           isLoading: false,
           idUser: "",
-          idClient: ""
+          idClient: "",
+          idClientProgram: ""
         }),
       setChangePassword: (changePassword) =>
         set({ changePassword: changePassword }),

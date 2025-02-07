@@ -62,6 +62,10 @@ export const routes: IRouteProps = {
           text: "Clientes",
         },
         {
+          route: "/dashboard/doctor/pre-register/clientsPerProgram",
+          text: "Clientes por Programa",
+        },
+        {
           route: "/dashboard/doctor/pre-register/nurse",
           text: "Enfermeiras",
         },

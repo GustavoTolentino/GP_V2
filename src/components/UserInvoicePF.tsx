@@ -149,10 +149,9 @@ const UserInvoicePF = () => {
 
       <div className="w-full py-5">
         <div className="hidden md:grid md:grid-cols-4">
-          <span className="ml-8 text-base font-semibold">Número da NF</span>
+          <span className="ml-8 text-base font-semibold">Número do documento</span>
           <span className="ml-5 text-base font-semibold">Valor</span>
-          <span className="ml-4 text-base font-semibold">NF Anexada</span>
-          <span className="ml-2 text-base font-semibold">Procedimentos da NF</span>
+          <span className="ml-4 text-base font-semibold">Arquivo Anexado</span>
         </div>
         <div className="flex flex-col gap-5">
           {
@@ -166,9 +165,9 @@ const UserInvoicePF = () => {
                   <div className="flex flex-col md:grid md:grid-cols-4 gap-2">
                     <div className="flex flex-col md:ml-8">
                       <span className="block md:hidden text-base font-semibold">
-                        Número da NF
+                        Numero do documento
                       </span>
-                      <span className="text-sm">{user.identificationCode}</span>
+                      <span className="text-sm">{user.documentNumber}</span>
                     </div>
                     <div className="flex flex-col md:ml-5">
                       <span className="block md:hidden text-base font-semibold">
@@ -178,7 +177,7 @@ const UserInvoicePF = () => {
                     </div>
                     <div className="flex flex-col md:ml-4">
                       <span className="block md:hidden text-base font-semibold">
-                        NF Anexada
+                        Documento
                       </span>
                       <span className="text-sm">
                         {user.hasFile ? (
@@ -195,7 +194,7 @@ const UserInvoicePF = () => {
                         )}
                       </span>
                     </div>
-                    <div className="flex flex-col md:ml-2">
+                    {/* <div className="flex flex-col md:ml-2">
                       <span className="block md:hidden text-base font-semibold">
                         Procedimentos da NF
                       </span>
@@ -213,7 +212,7 @@ const UserInvoicePF = () => {
                           />
                         )}
                       </span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

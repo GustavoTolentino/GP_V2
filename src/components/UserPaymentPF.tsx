@@ -15,15 +15,18 @@ const UserPaymentPF = () => {
   const auth = useSession();
   const [volumetriesOptions, setVolumetriesOptions] = useState<any[]>([]);
   const [paymentTypesOptions, setPaymentTypesOptions] = useState<any[]>([]);
-  const [volumetries, setVolumetries] = useState<any[]>([]);
+  const [banks, setBanks] = useState<any[]>([]);
   const [paymentTypes, setPaymentTypes] = useState<any[]>([]);
   const [paymentTerms, setPaymentTerms] = useState<any[]>([]);
   const [editMode, setEditMode] = useState(false);
   const [data, setData] = useState<any>({
     healthProfessionalId: refresh.idUser,
     paymentTypeId: "",
-    volumetryId: "",
-    paymentTerm: 0
+    paymentTerm: "",
+    agency: "",
+    bankAccountNumber: "",
+    pixKey: "",
+    bankId: ""
   });
 
   useEffect(() => {
@@ -33,33 +36,34 @@ const UserPaymentPF = () => {
 
   const getDropdownsContent = async () => {
     const response = await getAllDropdownsPayments();
-    setVolumetriesOptions(response.volumetries);
+    setBanks(response.banks);
     setPaymentTypesOptions(response.paymentTypes);
   };
 
   const getPaymentDetails = async () => {
     const response = await getPaymentById(refresh.idUser);
+    console.log(response)
+    console.log(response.data)
     const result = response.data;
-    setVolumetries(result.volumetries || []);
     setPaymentTypes(result.paymentTypes || []);
     setPaymentTerms(result.paymentTerms || []);
     setData((prevData: any) => ({
       ...prevData,
       paymentTypeId: result.paymentTypeId || "",
-      volumetryId: result.volumetryId || "",
-      paymentTerm: result.paymentTerm || ""
+      paymentTerm: result.paymentTerm || "",
+      bankId: result.bankId || "",
+      pixKey: result.pixKey || "",
+      bankAccountNumber: result.bankAccountNumber || "",
+      agency: result.agency || ""
     }));
   };
 
   const addPayment = async () => {
-    console.log(data);
     updatePayment(data)
       .then((response) => {
-        console.log("Atualizar");
-        console.log(response);
-        if(!response.data){
-          createPayment(data).then((resp:any) => {
-            if(resp.success) {
+        if (!response.data) {
+          createPayment(data).then((resp: any) => {
+            if (resp.success) {
               toast.success("Dados de pagamento cadastrados com sucesso");
               setEditMode(false);
             } else {
@@ -81,24 +85,7 @@ const UserPaymentPF = () => {
 
   return (
     <div className="w-full h-screen">
-      <div className="grid grid-cols-3 gap-4 items-center">
-        <CustomSelect
-          name="volumetryId"
-          label="Volumetria"
-          options={volumetriesOptions.map((volumetry) => ({
-            id: volumetry.id,
-            value: volumetry.name,
-          }))}
-          value={data.volumetryId}
-          onChange={(selectedValue) => {
-            setData((prevData: any) => ({
-              ...prevData,
-              volumetryId: selectedValue.target.value,
-            }));
-          }}
-          disabled={!editMode}
-        />
-
+      <div className="grid grid-cols-3 gap-4 items-center mb-4">
         <CustomSelect
           name="paymentTypeId"
           label="Tipo de pagamento"
@@ -116,17 +103,71 @@ const UserPaymentPF = () => {
           disabled={!editMode}
         />
         <Input
-              name="paymentTerm"
-              placeholder="Prazo pagamento (em dias)"
-              value={data.paymentTerm}
-              onChange={(e) => {
-                setData((prevState: any) => ({
-                  ...prevState,
-                  paymentTerm: e.target.value,
-                }));
-              }}
-              disabled={!editMode}
-            />
+          name="paymentTerm"
+          placeholder="Prazo pagamento (em dias)"
+          value={data.paymentTerm}
+          onChange={(e) => {
+            setData((prevState: any) => ({
+              ...prevState,
+              paymentTerm: e.target.value,
+            }));
+          }}
+          disabled={!editMode}
+        />
+        <CustomSelect
+          name="bankId"
+          label="Banco"
+          options={banks.map((bank) => ({
+            id: bank.id,
+            value: bank.name,
+          }))}
+          value={data.bankId}
+          onChange={(selectedValue) => {
+            setData((prevData: any) => ({
+              ...prevData,
+              bankId: selectedValue.target.value,
+            }));
+          }}
+          disabled={!editMode}
+        />
+      </div>
+      <div className="grid grid-cols-3 gap-4 items-center">
+        <Input
+          name="agency"
+          placeholder="Agência"
+          value={data.agency}
+          onChange={(e) => {
+            setData((prevState: any) => ({
+              ...prevState,
+              agency: e.target.value,
+            }));
+          }}
+          disabled={!editMode}
+        />
+        <Input
+          name="bankAccountNumber"
+          placeholder="Conta corrente"
+          value={data.bankAccountNumber}
+          onChange={(e) => {
+            setData((prevState: any) => ({
+              ...prevState,
+              bankAccountNumber: e.target.value,
+            }));
+          }}
+          disabled={!editMode}
+        />
+        <Input
+          name="pixKey"
+          placeholder="Chave Pix"
+          value={data.pixKey}
+          onChange={(e) => {
+            setData((prevState: any) => ({
+              ...prevState,
+              pixKey: e.target.value,
+            }));
+          }}
+          disabled={!editMode}
+        />
       </div>
       <div className="flex justify-end gap-3 mt-10">
         {!editMode ? (
@@ -153,7 +194,7 @@ const UserPaymentPF = () => {
               type="submit"
               variant="tertiary"
               onClick={addPayment}
-              disabled={!data.paymentTypeId || !data.volumetryId || !data.paymentTerm}
+              disabled={!data.paymentTypeId || !data.paymentTerm || !data.agency || !data.bankAccountNumber || !data.pixKey}
             >
               Salvar
             </Button>

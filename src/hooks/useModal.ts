@@ -149,3 +149,8 @@ export const medicamentsModal = create<ModalProps>((set) => ({
   isModalOpen: false,
   openModal: (action) => set(() => ({ isModalOpen: action })),
 }));
+
+export const clientPerProgramModal = create<ModalProps>((set) => ({
+  isModalOpen: false,
+  openModal: (action) => set(() => ({ isModalOpen: action })),
+}));

@@ -12,10 +12,10 @@ export const createPayment = async (payment:any) => {
 };
 
 export const getAllDropdownsPayments = async () => {
-  const response = await api.post("PaymentTypes/get-all-paymentt-types");
-  const responseVolumetries = await getAllVolumetries();
+  const response = await api.post("PaymentTypes/get-all-payment-types");
+  const responseBanks = await getAllBanks();
   const ret = {
-    volumetries: responseVolumetries.data,
+    banks: responseBanks.data,
     paymentTypes: response.data.data
   }
   return ret;
@@ -26,8 +26,8 @@ export const getPaymentById = async (id:any) => {
   return response.data;
 }
 
-const getAllVolumetries = async () => {
-  const response = await api.get("Volumetries/get-all-volumetries");
+const getAllBanks = async () => {
+  const response = await api.get("Banks/get-all-banks");
   return response.data;
 }
 export const updatePayment = async (data: any) => {

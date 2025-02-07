@@ -110,7 +110,7 @@ export function UserFeedbackPFedit() {
 
   return (
     <DialogContent
-      showCloseIcon={false}
+      showCloseIcon={true}
       className="md:w-[40%] rounded-lg lg:max-w-[80vw]  border border-none"
     >
       <div className="w-full flex flex-col gap-1 text-3xl md:text-2xl">
